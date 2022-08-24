@@ -1,8 +1,8 @@
 -- https://docs.spring.io/spring-security/reference/servlet/appendix/database-schema.html
 
 
-drop table authorities;
-drop table users;
+drop table if exists authorities;
+drop table if exists users;
 
 
 create table users (
