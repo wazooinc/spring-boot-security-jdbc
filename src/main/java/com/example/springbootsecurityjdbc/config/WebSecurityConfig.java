@@ -29,6 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
         .jdbcAuthentication()
         .dataSource(dataSource)
+        .usersByUsernameQuery("select username,password,enabled from users where username = ?")
+        .authoritiesByUsernameQuery("select username,authority from authorities where username = ?");
+        /*
         .withDefaultSchema()
         .withUser(
             User.withUsername("user")
@@ -39,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             User.withUsername("admin")
             .password("password")
             .roles("ADMIN")
-        );
+        );*/
 
     }
 
@@ -50,7 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/user").hasAnyRole("ADMIN", "USER")
             .antMatchers("/").permitAll()
             .antMatchers("/h2-console/**").permitAll()
-            .and().formLogin();
+            .and().formLogin()
+            .and().logout();
 
         // need to add for h2-console access
         http.csrf().disable();
